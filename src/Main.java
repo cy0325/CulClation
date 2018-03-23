@@ -9,22 +9,26 @@ public class Main
     public static void main(String []args)
     {
         ScriptEngine javascript = new ScriptEngineManager().getEngineByName("JavaScript");
-        PrintStream ps = null;
         String exp="";//表达式
         double result = 0; //结果
-        char[] c={'+','-','*','/'};
         //文件操作
-        try {
+        PrintStream ps = null;
+        try 
+        {
             File file =new File("./result.txt");
             ps = new PrintStream(new FileOutputStream(file));
-        } catch (FileNotFoundException e) {
+        } 
+        catch (FileNotFoundException e) 
+        {
             e.printStackTrace();
         }
+        ps.println("201571030101");
+        
+        
         //输入
         Scanner sc=new Scanner(System.in);
         System.out.println("请输入你要产生几个表达式：");
         int number=sc.nextInt();
-		ps.println("201571030101 曹阳");
         for(int j=0;j<number;j++)
         {
             //产生随机数数组
@@ -34,19 +38,48 @@ public class Main
             {
                 array[i] = r.nextInt(100);
             }
-            //	System.out.println(Arrays.toString(array));
+            char[] c={'+','-','*','/'};
             Random ran = new Random();
             int index=ran.nextInt(c.length);
             int index1=ran.nextInt(c.length);
             int index2=ran.nextInt(c.length);
             int index3=ran.nextInt(c.length);
-            exp = String.valueOf(""+array[0]+c[index]+array[1]+c[index1]+array[2]+c[index2]+array[3]+c[index3]+array[4]);
-            try {
+            int s = r.nextInt(4);
+            switch (s)
+            {
+            
+            	case 0:
+            	{
+            		exp = String.valueOf(""+array[0]+c[index]+array[1]);
+            		break;
+            	}
+            	case 1:
+            	{
+            		exp = String.valueOf(""+array[0]+c[index]+array[1]+c[index1]+array[2]);
+            		break;
+            	}
+            	case 2:
+            	{
+            		exp = String.valueOf(""+array[0]+c[index]+array[1]+c[index1]+array[2]+c[index2]+array[3]);
+            		break;
+            	}
+            	case 3:
+            	{
+            		exp = String.valueOf(""+array[0]+c[index]+array[1]+c[index1]+array[2]+c[index2]+array[3]+c[index3]+array[4]);
+            		break;
+            	}
+            }
+            
+            try 
+            {
                 result = Double.parseDouble(String.valueOf(javascript.eval(exp)));
-            } catch (ScriptException e) {
+            } 
+            catch (ScriptException e) 
+            {
                 e.printStackTrace();
             }
-            if(Math.floor(result)==result&&result>0&&result<99999) {
+            if(Math.floor(result)==result&&result>0&&result<99999) 
+            {
                 System.out.println(exp + "=" + (int) result);
                 ps.println(exp + "=" + (int) result);
             }
